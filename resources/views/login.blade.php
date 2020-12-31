@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Session; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,6 +41,14 @@
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                                                                
+                                            @if(Session::has('flash_message'))
+                                                <p class="alert alert-danger">
+                                                {{ Session::get('flash_message') }}
+                                                </p>
+                                                <?php Session::forget('flash_message'); ?>
+                                            @endif
+                                        
                                     </div>
                                     <form class="user" action="/login" method="POST">
                                         @csrf

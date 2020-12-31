@@ -15,7 +15,8 @@ class UserController extends Controller
 
         if(!$user || !Hash::check($request->password, $user->password))
         {
-            return "Email or password is not matched";
+            $request->session()->put('flash_message', 'Invalid Email/Password!');
+            return redirect("/");
         }else{
             $request->session()->put('user', $user);
             return redirect("/dashboard");
@@ -63,6 +64,36 @@ class UserController extends Controller
             echo $title = 'Expenses';
 
             // return view('expenses', ['title'=>$title]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    function editUser($id){
+        if(Session::has('user')){
+            $title = 'Edit User';
+
+            $data = User::find($id);
+
+            return view('edit_user', ['title'=>$title, 'user_info'=>$data]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    function updateUser($id, Request $request){
+        if(Session::has('user')){
+        
+            $array = array(
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'allow_sub_accounts' => $request->input('allow_sub_accounts'),
+                'status' => $request->input('status'),
+            );
+
+            User::where('id', $id)->update($array);
+        
+            return redirect('/users');
         }else{
             return redirect('/');
         }

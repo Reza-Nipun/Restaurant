@@ -24,4 +24,6 @@ Route::get("/dashboard", [UserController::class, 'dashboard']);
 Route::get("/users", [UserController::class, 'users']);
 Route::get("/sales_accounts", [UserController::class, 'salesAccounts']);
 Route::get("/expenses", [UserController::class, 'expenses']);
+Route::get("/edit_user/{id}", [UserController::class, 'editUser']);
+Route::post("/update_user/{id}", [UserController::class, 'updateUser']);
 Route::get("/logout", [UserController::class, 'logout']);

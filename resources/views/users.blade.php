@@ -23,6 +23,7 @@
                             <th class="text-center">Name</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Access Level</th>
+                            <th class="text-center">Allow Sub-Account</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Action</th>
                         </tr>
@@ -34,9 +35,10 @@
                                 <td class="text-center">{{ $u->name }}</td>
                                 <td class="text-center">{{ $u->email }}</td>
                                 <td class="text-center">{{ $u->access_level == 1 ? 'Admin' : ($u->access_level == 2 ? 'Sales Account' : 'Super Admin') }}</td>
+                                <td class="text-center">{{ $u->allow_sub_accounts }}</td>
                                 <td class="text-center">{{ $u->status == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="/edit_user/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach
