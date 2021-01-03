@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+
 use App\User;
 
 class UserController extends Controller
 {
     function login(Request $request){
+        $date = date('Y-m-d');
+
         $user = User::where(['email'=>$request->email, 'status'=>1])->first();
 
         if(!$user || !Hash::check($request->password, $user->password))
@@ -19,6 +23,13 @@ class UserController extends Controller
             return redirect("/");
         }else{
             $request->session()->put('user', $user);
+
+            $array = array(
+                'last_login_date' => $date,
+            );
+
+            User::where('id', $user->id)->update($array);
+
             return redirect("/dashboard");
         }
     }

@@ -21,6 +21,75 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <style>
+        .awesome {
+      
+      
+      color:#313131;
+      font-weight: bold;
+      -webkit-animation:colorchange 20s infinite alternate;
+      
+      
+    }
+
+    @-webkit-keyframes colorchange {
+      0% {
+        
+        color: blue;
+      }
+      
+      10% {
+        
+        color: #8e44ad;
+      }
+      
+      20% {
+        
+        color: #1abc9c;
+      }
+      
+      30% {
+        
+        color: #d35400;
+      }
+      
+      40% {
+        
+        color: blue;
+      }
+      
+      50% {
+        
+        color: #34495e;
+      }
+      
+      60% {
+        
+        color: blue;
+      }
+      
+      70% {
+        
+        color: #2980b9;
+      }
+      80% {
+     
+        color: #f1c40f;
+      }
+      
+      90% {
+     
+        color: #2980b9;
+      }
+      
+      100% {
+        
+        color: pink;
+      }
+    }
+        
+    </style>
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -40,7 +109,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 mb-4 awesome">RESTAURANT POS</h1>
                                                                                 
                                             @if(Session::has('flash_message'))
                                                 <p class="alert alert-danger">
@@ -64,11 +133,15 @@
                                         <button class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
+                                        <div class="text-right mt-2">
+                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        </div>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <!-- <a class="small" href="forgot-password.html">Forgot Password?</a> -->
+                                        <a class="btn btn-success" href="forgot-password.html">Create New Account</a>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
