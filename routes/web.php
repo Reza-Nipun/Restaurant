@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,11 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     $title = 'Login';
     return view('login', compact('title'));
+});
+
+Route::get('/register', function () {
+    $title = 'Register';
+    return view('register', compact('title'));
 });
 
 Route::post("/login", [UserController::class, 'login']);
