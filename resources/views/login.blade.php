@@ -25,6 +25,12 @@
                                                 </p>
                                                 <?php Session::forget('flash_message'); ?>
                                             @endif
+                                            @if(Session::has('success_message'))
+                                                <p class="alert alert-success">
+                                                {{ Session::get('success_message') }}
+                                                </p>
+                                                <?php Session::forget('success_message'); ?>
+                                            @endif
                                         
                                     </div>
                                     <form class="user" action="/login" method="POST">

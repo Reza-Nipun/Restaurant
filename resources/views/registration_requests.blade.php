@@ -22,27 +22,21 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Name</th>
                             <th class="text-center">Email</th>
-                            <th class="text-center">Mobile</th>
-                            <th class="text-center">Sub-Account Limit</th>
-                            <th class="text-center">Service Charge</th>
-                            <th class="text-center">Valid Till</th>
+                            <th class="text-center">Access Level</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $u)
+                        @foreach($registration_requests as $u)
                             <tr>
                                 <td class="text-center">{{ $u->id }}</td>
                                 <td class="text-center">{{ $u->name }}</td>
                                 <td class="text-center">{{ $u->email }}</td>
-                                <td class="text-center">{{ $u->mobile }}</td>
-                                <td class="text-center">{{ $u->allow_sub_accounts }}</td>
-                                <td class="text-center">{{ $u->service_charge }}</td>
-                                <td class="text-center">{{ $u->account_valid_till }}</td>
+                                <td class="text-center">{{ $u->access_level == 1 ? 'Admin' : ($u->access_level == 2 ? 'Sales Account' : 'Super Admin') }}</td>
                                 <td class="text-center">{{ $u->status == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-                                    <a href="/edit_user/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="/edit_registration_request/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach
