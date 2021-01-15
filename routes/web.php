@@ -32,6 +32,8 @@ Route::get("/dashboard", [UserController::class, 'dashboard']);
 Route::get("/registration_requests", [UserController::class, 'registrationRequests']);
 Route::get("/users", [UserController::class, 'users']);
 Route::get("/sales_accounts", [UserController::class, 'salesAccounts']);
+Route::get("/create_sales_account", [UserController::class, 'createSalesAccount']);
+Route::post("/save_sales_account", [UserController::class, 'saveSalesAccount']);
 Route::get("/expenses", [UserController::class, 'expenses']);
 Route::get("/edit_registration_request/{id}", [UserController::class, 'editRegistrationRequest']);
 Route::get("/edit_user/{id}", [UserController::class, 'editUser']);

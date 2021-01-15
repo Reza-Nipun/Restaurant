@@ -49,7 +49,7 @@ class UserController extends Controller
 
         if(Session::has('user')){
             $title = 'Dashboard';
-
+            
             return view('dashboard', ['title'=>$title]);
         }else{
             return redirect('/');
@@ -141,6 +141,55 @@ class UserController extends Controller
         }else{
             return redirect('/');
         }
+    }
+
+    function createSalesAccount(){
+        if(Session::has('user')){
+            $title = 'Create Sales Account';
+
+            return view('create_sales_account', ['title'=>$title]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    function saveSalesAccount(Request $request){
+        $parent_id = Session::get('user')->id;
+        $reg_approval_status = Session::get('user')->reg_approval_status;
+        $registration_date = Session::get('user')->registration_date;
+        $reg_approval_date = Session::get('user')->reg_approval_date;
+        $service_charge = Session::get('user')->service_charge;
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $status = $request->input('status');
+        $phone = $request->input('phone');
+        $mobile = $request->input('mobile');
+        $receipt_note = $request->input('receipt_note');
+        $address = $request->input('address');
+        $password = $request->input('password');
+        $vat_percentage = $request->input('vat_percentage');
+
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->mobile = $mobile;
+        $user->phone = $phone;
+        $user->password = Hash::make($password);
+        $user->access_level = 2;
+        $user->status = $status;
+        $user->parent_id = $parent_id;
+        $user->reg_approval_status = $reg_approval_status;
+        $user->reg_approval_date = $reg_approval_date;
+        $user->registration_date = $registration_date;
+        $user->allow_sub_accounts = 0;
+        $user->service_charge = $service_charge;
+        $user->vat_percentage = $vat_percentage;
+        $user->address = $address;
+        $user->receipt_note = $receipt_note;
+        $save_res = $user->save();
+
+        return redirect('/sales_accounts');
     }
 
     function expenses(){

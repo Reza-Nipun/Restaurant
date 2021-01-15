@@ -25,16 +25,16 @@ class RegistrationController extends Controller
         $user = new User();
         $user->name = $user_name;
         $user->email = $email;
-        $user->mobile = $$mobile;
+        $user->mobile = $mobile;
         $user->password = Hash::make($password);
         $user->access_level = 1;
         $user->status = 1;
-        $user->parent_id = 0;
         $user->parent_id = 0;
         $user->reg_approval_status = 2;
         $user->registration_date = date('Y-m-d');
         $user->allow_sub_accounts = 1;
         $user->service_charge = 0;
+        $user->vat_percentage = 0;
         $save_res = $user->save();
 
         if($save_res == 1){

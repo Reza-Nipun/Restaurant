@@ -334,38 +334,56 @@
 
 </div>
 
+@if(Session::get('user')->access_level == 1) 
+<?php
 
-<div class="modal fade" id="warning_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                
-                
-                <h3 class="modal-title mr-4" id="exampleModalLabel">Warning Message</h3>
-                <div class="icon-circle bg-warning">
-                    <i class="fas fa-exclamation-triangle text-white"></i>
+$tdate = Session::get('user')->account_valid_till;
+$fdate = date('Y-m-d');
+$datetime1 = strtotime($fdate); // convert to timestamps
+$datetime2 = strtotime($tdate); // convert to timestamps
+$days = (int)(($datetime2 - $datetime1)/86400);
+
+?>
+
+    @if($days <= 30)
+    <div class="modal fade" id="warning_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    
+                    <h3 class="modal-title mr-4" id="exampleModalLabel">Warning Message</h3>
+                    <div class="icon-circle bg-warning">
+                        <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Your account will expire on: 2021-01-31</p>
-                <p>Please extend your account validation date!</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="/dashboard">Payment</a>
+                <div class="modal-body">
+                    <p>Your account will expire on: {{ Session::get('user')->account_valid_till }}</p>
+                    <p>Please pay yearly service charge {{ Session::get('user')->service_charge }} BDT and extend your account validation date!</p>
+                    <br />
+                    <p><b>Admin Contact Information:</b></p>
+                    <p>Mobile: +8801727135231</p>
+                    <p>Email: info@techexpertsbd.com</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+                    <!-- <a class="btn btn-primary" href="/dashboard">ok</a> -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-  <script type="text/javascript">
-      $(document).ready(function(){
-          $("#warning_modal").modal('show');
-      });
-  </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#warning_modal").modal('show');
+        });
+    </script>
+    @endif
+    
+@endif
 
 @endsection

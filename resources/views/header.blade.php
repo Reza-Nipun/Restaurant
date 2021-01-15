@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
     <div class="sidebar-brand-text mx-3">
         @if(Session::has('user'))
             {{ Session::get('user')->name }}
@@ -46,34 +46,47 @@
 @endif
 
 @if(Session::get('user')->access_level == 1)
-<!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fa fa-user"></i>
-        <span>Sales Accounts</span>
-    </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Sales Account List:</h6>
-            <a class="collapse-item" href="/sales_accounts">Sales Accounts</a>
-        </div>
-    </div>
-</li>
+<?php
 
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
-        aria-expanded="true" aria-controls="collapseOtherExpense">
-        <i class="fas fa-money-check-alt"></i>
-        <span>Expenses</span>
-    </a>
-    <div id="collapseOtherExpense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Expenses:</h6>
-            <a class="collapse-item" href="/expenses">Expenses</a>
+$tdate = Session::get('user')->account_valid_till;
+$fdate = date('Y-m-d');
+$datetime1 = strtotime($fdate); // convert to timestamps
+$datetime2 = strtotime($tdate); // convert to timestamps
+$days = (int)(($datetime2 - $datetime1)/86400);
+
+?>
+
+    @if($days > 0)
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fa fa-user"></i>
+            <span>Sales Accounts</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Sales Account List:</h6>
+                <a class="collapse-item" href="/sales_accounts">Sales Accounts</a>
+            </div>
         </div>
-    </div>
-</li>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
+            aria-expanded="true" aria-controls="collapseOtherExpense">
+            <i class="fas fa-money-check-alt"></i>
+            <span>Expenses</span>
+        </a>
+        <div id="collapseOtherExpense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Expenses:</h6>
+                <a class="collapse-item" href="/expenses">Expenses</a>
+            </div>
+        </div>
+    </li>
+    @endif
 @endif
 
 <!-- Nav Item - Utilities Collapse Menu -->
