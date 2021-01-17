@@ -57,7 +57,7 @@ class RegistrationController extends Controller
             $request->session()->put('success_message', 'Your restaurant account has been created. Please wait 24-48 Hours for the approval.');
 
         }else{
-            $request->session()->put('flash_message', 'Invalid Email/Password!');
+            $request->session()->put('flash_message', 'Registration Failed!');
         }
 
         return redirect('/register');
@@ -71,4 +71,69 @@ class RegistrationController extends Controller
 
         return response()->json($res);
     }
+
+    function forgotPasswordAccessability(Request $request){
+        $email = $request->input('email');
+
+        $res = User::where('email', $email)->whereIn('access_level', [0, 1])->get();
+
+        return response()->json($res);
+    }
+
+    function sendResetPasswordLink(Request $request){
+        $email = $request->input('email');
+        
+        $rand_code = rand(1000, 5000);
+
+        $array = array(
+            'remember_token' => $rand_code
+        );
+
+        User::where('email', $email)->update($array);
+
+        $data = array(
+            'email' => $email,
+            'code' => $rand_code,
+        );
+
+        Mail::send('emails.reset_password', $data, function($message) use($email)
+        {
+            $message
+                ->to($email)
+                ->from('info@techexpertsbd.com', 'Tech Experts BD')
+                ->subject('Reset Password - Restaurant POS');
+        });
+
+        $request->session()->put('success_message', 'Please check your email inbox to reset your account password.');
+
+        return redirect()->back();
+    }
+
+    function resetMyPassword($email, $code){
+        $title = 'Reset My Password';
+
+        return view('reset_my_password', ['email'=>$email, 'code'=>$code, 'title'=>$title]);
+    }
+
+    function resettingPassword($email, $code, Request $request){
+        $password = $request->input('password');
+
+        $array = array(
+            'password' => Hash::make($password),
+            'remember_token' => NULL,
+        );
+
+        $res = User::where('email', $email)->where('remember_token', $code)->update($array);
+
+        if($res == 1){
+            $request->session()->put('success_message', 'Password is changed successfully!');
+
+            return redirect('/');
+        }else{
+            $request->session()->put('flash_message', 'Password Resetting Process Failed!');
+
+            return redirect()->back();
+        }
+    }
+
 }

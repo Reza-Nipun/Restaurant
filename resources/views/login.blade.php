@@ -23,13 +23,13 @@
                                                 <p class="alert alert-danger">
                                                 {{ Session::get('flash_message') }}
                                                 </p>
-                                                <?php Session::forget('flash_message'); ?>
+                                                {{ Session::forget('flash_message') }}
                                             @endif
                                             @if(Session::has('success_message'))
                                                 <p class="alert alert-success">
                                                 {{ Session::get('success_message') }}
                                                 </p>
-                                                <?php Session::forget('success_message'); ?>
+                                                {{ Session::forget('success_message') }}
                                             @endif
                                         
                                     </div>
@@ -48,7 +48,7 @@
                                             Login
                                         </button>
                                         <div class="text-right mt-2">
-                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                            <a class="small" href="/forgot_password">Forgot Password?</a>
                                         </div>
                                     </form>
                                     <hr>

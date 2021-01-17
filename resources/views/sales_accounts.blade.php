@@ -12,8 +12,14 @@
             <p class="">Limit: {{ Session::get('user')->allow_sub_accounts }}</p>
         </div>
         <div class="col-sm-2">
+
+        @php 
+            $allow_sub_accounts = Session::get('user')->allow_sub_accounts; 
+            $created_sales_accounts = sizeof($sales_accounts); 
+        @endphp
+
         <a class="btn btn-success" href="/create_sales_account" 
-            @if(Session::get('user')->allow_sub_accounts == sizeof($sales_accounts) ) 
+            @if($allow_sub_accounts ==  $created_sales_accounts) 
                 onclick="return false;" 
             @endif
             ><i class="fa fa-plus" aria-hidden="true"></i> Account</a>    
@@ -48,7 +54,7 @@
                                 <td class="text-center">{{ $u->mobile }}</td>
                                 <td class="text-center">{{ $u->status == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="edit_sales_account/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach

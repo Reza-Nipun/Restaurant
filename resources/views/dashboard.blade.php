@@ -335,7 +335,7 @@
 </div>
 
 @if(Session::get('user')->access_level == 1) 
-<?php
+@php
 
 $tdate = Session::get('user')->account_valid_till;
 $fdate = date('Y-m-d');
@@ -343,7 +343,7 @@ $datetime1 = strtotime($fdate); // convert to timestamps
 $datetime2 = strtotime($tdate); // convert to timestamps
 $days = (int)(($datetime2 - $datetime1)/86400);
 
-?>
+@endphp
 
     @if($days <= 30)
     <div class="modal fade" id="warning_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

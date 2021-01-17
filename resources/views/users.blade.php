@@ -6,8 +6,14 @@
     <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Users</h1>
-    
+    <div class="row">
+        <div class="col-sm-10">
+        <h1 class="h3 mb-2 text-gray-800">Users</h1>
+        </div>
+        <div class="col-sm-2">
+        <a class="btn btn-success" href="/new_user"><i class="fa fa-plus" aria-hidden="true"></i> User</a>
+        </div>
+    </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">

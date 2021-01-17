@@ -46,7 +46,7 @@
 @endif
 
 @if(Session::get('user')->access_level == 1)
-<?php
+@php
 
 $tdate = Session::get('user')->account_valid_till;
 $fdate = date('Y-m-d');
@@ -54,7 +54,7 @@ $datetime1 = strtotime($fdate); // convert to timestamps
 $datetime2 = strtotime($tdate); // convert to timestamps
 $days = (int)(($datetime2 - $datetime1)/86400);
 
-?>
+@endphp
 
     @if($days > 0)
 
@@ -157,13 +157,6 @@ $days = (int)(($datetime2 - $datetime1)/86400);
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>
-</div>
-
-<!-- Sidebar Message -->
-<div class="sidebar-card">
-    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
-    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
 </div>
 
 </ul>

@@ -12,7 +12,7 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create Account!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Reset My Password</h1>
                                     @if(Session::has('flash_message'))
                                         <p class="alert alert-danger">
                                         {{ Session::get('flash_message') }}
@@ -26,21 +26,8 @@
                                         {{ Session::forget('success_message') }}
                                     @endif
                             </div>
-                            <form class="user" action="/registration" method="POST">
+                            <form class="user" action="/resetting_password/{{ $email }}/{{ $code }}" method="POST">
                                 @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                        required="required" name="user_name" placeholder="User Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email_address"
-                                        required="required" onblur="checkEmailAddressAvailability()" name="email" placeholder="Email Address">
-                                        <span style="color: red; display: none;" id="email_emessage">Email Address Already Exist!</span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="mobile"
-                                        required="required" name="mobile" placeholder="Your Mobile Number">
-                                </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user" required="required"
@@ -52,13 +39,13 @@
                                     </div>
                                     <span style="color: red; display: none;" id="password_emessage">Password Mismatch!</span>
                                 </div>
-                                <button class="btn btn-primary btn-user btn-block" id="submit_btn" disabled="disabled">
-                                    Register Account
+                                <button class="btn btn-primary btn-user btn-block" id="submit_btn">
+                                    Send Reset Link
                                 </button>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/">Already have an account? Login!</a>
+                                <a class="small" href="/"> << Back to Login</a>
                             </div>
                         </div>
                     </div>
@@ -96,19 +83,15 @@
             if(email_address != ''){
                 $.ajax({
                     type:'POST',
-                    url:"/user_availability",
+                    url:"/forgot_password_accessability",
                     data:{"_token": "{{ csrf_token() }}", email: email},
                     success:function(data){
-                        if(data.length > 0){
+
+                        if(data.length == 0){
                             $("#email_emessage").css('display', 'block');
                             $("#email_address").val('');
-                            $("#submit_btn").attr('disabled', 'disabled');
-                        }else{
-                            $("#email_emessage").css('display', 'none');
-                            $("#submit_btn").attr('disabled', false);
-
-                            $("#confirm_password").blur();
                         }
+
                     }
                 });
             }
