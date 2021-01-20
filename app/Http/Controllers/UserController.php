@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 
@@ -285,16 +284,6 @@ class UserController extends Controller
         return redirect('/sales_accounts');
     }
 
-    function expenses(){
-        if(Session::has('user')){
-            echo $title = 'Expenses';
-
-            // return view('expenses', ['title'=>$title]);
-        }else{
-            return redirect('/');
-        }
-    }
-
     function editRegistrationRequest($id){
         if(Session::has('user')){
             $title = 'Edit Registration Request';
@@ -347,15 +336,19 @@ class UserController extends Controller
     }
 
     function resetPassword($id){
-        $array = array(
-            'password' => Hash::make('12345678'),
-        );
+        if(Session::has('user')){
+            $array = array(
+                'password' => Hash::make('12345678'),
+            );
 
-        User::where('id', $id)->update($array);
+            User::where('id', $id)->update($array);
 
-        Session::put('success_message', 'User Password Reset Successful.');
+            Session::put('success_message', 'User Password Reset Successful.');
 
-        return redirect()->back();
+            return redirect()->back();
+        }else{
+            return redirect('/');
+        }
     }
 
     function logout(){

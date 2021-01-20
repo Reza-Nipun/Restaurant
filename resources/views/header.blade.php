@@ -23,9 +23,6 @@
 <hr class="sidebar-divider">
 
 <!-- Heading -->
-<div class="sidebar-heading">
-    Users
-</div>
 
 @if(Session::get('user')->access_level == 0)
 <!-- Nav Item - Pages Collapse Menu -->
@@ -73,6 +70,36 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
+            aria-expanded="true" aria-controls="collapseOtherExpense">
+            <i class="fas fa-money-check-alt"></i>
+            <span>Expenses</span>
+        </a>
+        <div id="collapseOtherExpense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Expenses:</h6>
+                <a class="collapse-item" href="/expenses">Expenses</a>
+            </div>
+        </div>
+    </li>
+    @endif
+@endif
+
+@if(Session::get('user')->access_level == 2)
+@php
+
+$tdate = Session::get('user')->account_valid_till;
+$fdate = date('Y-m-d');
+$datetime1 = strtotime($fdate); // convert to timestamps
+$datetime2 = strtotime($tdate); // convert to timestamps
+$days = (int)(($datetime2 - $datetime1)/86400);
+
+@endphp
+
+    @if($days > 0)
+
+    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
             aria-expanded="true" aria-controls="collapseOtherExpense">

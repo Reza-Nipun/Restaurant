@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\ExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,9 +50,13 @@ Route::get("/edit_sales_account/{id}", [UserController::class, 'editSalesAccount
 Route::post("/update_sales_account/{id}", [UserController::class, 'updateSalesAccount']);
 Route::get("/create_sales_account", [UserController::class, 'createSalesAccount']);
 Route::post("/save_sales_account", [UserController::class, 'saveSalesAccount']);
-Route::get("/expenses", [UserController::class, 'expenses']);
 Route::get("/edit_registration_request/{id}", [UserController::class, 'editRegistrationRequest']);
 Route::get("/edit_user/{id}", [UserController::class, 'editUser']);
 Route::post("/update_user/{id}", [UserController::class, 'updateUser']);
 Route::post("/update_registration_info/{id}", [UserController::class, 'updateRegistrationInfo']);
+
+Route::get("/expenses", [ExpenseController::class, 'expenses']);
+Route::get("/create_expense", [ExpenseController::class, 'createExpense']);
+Route::post("/save_expense", [ExpenseController::class, 'saveExpense']);
+
 Route::get("/logout", [UserController::class, 'logout']);
