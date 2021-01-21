@@ -71,4 +71,52 @@ class ExpenseController extends Controller
             return redirect('/');
         }
     }
+
+    function editExpense($id){
+        if(Session::has('user')){
+            $title = 'Edit Expense';
+            
+            $expense_info = Expense::find($id);
+
+            return view('edit_expense', ['title'=>$title, 'expense_info'=>$expense_info]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    function updateExpense($id, Request $request){
+        if(Session::has('user')){
+            
+            $expenditures = $request->input('expenditures');
+            $description = $request->input('description');
+            $expense = $request->input('expense');
+
+            $array = array(
+                'expenditures' => $expenditures,
+                'description' => $description,
+                'expense' => $expense,
+            );
+
+            $res = Expense::where('id', $id)->update($array);
+
+            Session::put('success_message', 'Successfully Updated!');
+
+            return redirect()->back();
+        }else{
+            return redirect('/');
+        }  
+    }
+
+    function deleteExpense($id){
+        if(Session::has('user')){
+            
+            $res = Expense::destroy($id);
+
+            Session::put('success_message', 'Successfully Deleted!');
+
+            return redirect('/expenses');
+        }else{
+            return redirect('/');
+        }
+    }
 }

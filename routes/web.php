@@ -58,5 +58,8 @@ Route::post("/update_registration_info/{id}", [UserController::class, 'updateReg
 Route::get("/expenses", [ExpenseController::class, 'expenses']);
 Route::get("/create_expense", [ExpenseController::class, 'createExpense']);
 Route::post("/save_expense", [ExpenseController::class, 'saveExpense']);
+Route::get("/edit_expense/{id}", [ExpenseController::class, 'editExpense']);
+Route::post("/update_expense/{id}", [ExpenseController::class, 'updateExpense']);
+Route::get("/delete_expense/{id}", [ExpenseController::class, 'deleteExpense']);
 
 Route::get("/logout", [UserController::class, 'logout']);
