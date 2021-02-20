@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +63,13 @@ Route::post("/save_expense", [ExpenseController::class, 'saveExpense']);
 Route::get("/edit_expense/{id}", [ExpenseController::class, 'editExpense']);
 Route::post("/update_expense/{id}", [ExpenseController::class, 'updateExpense']);
 Route::get("/delete_expense/{id}", [ExpenseController::class, 'deleteExpense']);
+
+Route::get("/products", [ProductController::class, 'productList']);
+
+Route::get("/categories", [CategoryController::class, 'categoryList']);
+Route::get("/create_category", [CategoryController::class, 'createCategory']);
+Route::post("/save_category", [CategoryController::class, 'saveCategory']);
+Route::get("/edit_category/{id}", [CategoryController::class, 'editCategory']);
+Route::post("/update_category/{id}", [CategoryController::class, 'updateCategory']);
 
 Route::get("/logout", [UserController::class, 'logout']);

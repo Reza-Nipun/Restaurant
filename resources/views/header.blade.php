@@ -69,7 +69,20 @@ $days = (int)(($datetime2 - $datetime1)/86400);
             </div>
         </div>
     </li>
-
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
+            aria-expanded="true" aria-controls="collapseCategory">
+            <i class="fas fa-money-check-alt"></i>
+            <span>Products</span>
+        </a>
+        <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Products:</h6>
+                <a class="collapse-item" href="/products">Product List</a>
+                <a class="collapse-item" href="/categories">Category List</a>
+            </div>
+        </div>
+    </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
             aria-expanded="true" aria-controls="collapseOtherExpense">
@@ -101,15 +114,15 @@ $days = (int)(($datetime2 - $datetime1)/86400);
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOtherExpense"
-            aria-expanded="true" aria-controls="collapseOtherExpense">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSale"
+            aria-expanded="true" aria-controls="collapseSale">
             <i class="fas fa-money-check-alt"></i>
-            <span>Expenses</span>
+            <span>Sale</span>
         </a>
-        <div id="collapseOtherExpense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseSale" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Expenses:</h6>
-                <a class="collapse-item" href="/expenses">Expenses</a>
+                <h6 class="collapse-header">Sale:</h6>
+                <a class="collapse-item" href="/sale">Sale</a>
             </div>
         </div>
     </li>

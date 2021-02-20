@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Expense;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Carbon;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -49,7 +51,15 @@ class UserController extends Controller
         if(Session::has('user')){
             $title = 'Dashboard';
             
-            return view('dashboard', ['title'=>$title]);
+            $parent_id = Session::get('user')->id;
+
+            $expenses = Expense::where('parent_id', $parent_id)
+                        ->where("date",">", (new \Carbon\Carbon)->submonths(6))
+                        ->select(DB::raw("DATE_FORMAT(date, '%Y-%m') as year_mon"), DB::raw("SUM(expense) as total_month_expense"))
+                        ->groupBy(DB::raw("DATE_FORMAT(date, '%Y-%m')"))
+                        ->get();
+                        
+            return view('dashboard', ['title'=>$title, 'expenses' => $expenses]);
         }else{
             return redirect('/');
         }
