@@ -65,6 +65,10 @@ Route::post("/update_expense/{id}", [ExpenseController::class, 'updateExpense'])
 Route::get("/delete_expense/{id}", [ExpenseController::class, 'deleteExpense']);
 
 Route::get("/products", [ProductController::class, 'productList']);
+Route::get("/create_product", [ProductController::class, 'createProduct']);
+Route::post("/save_product", [ProductController::class, 'saveProduct']);
+Route::get("/edit_product/{id}", [ProductController::class, 'editProduct']);
+Route::post("/update_product/{id}", [ProductController::class, 'updateProduct']);
 
 Route::get("/categories", [CategoryController::class, 'categoryList']);
 Route::get("/create_category", [CategoryController::class, 'createCategory']);
