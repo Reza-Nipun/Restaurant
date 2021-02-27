@@ -6,6 +6,8 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,5 +77,13 @@ Route::get("/create_category", [CategoryController::class, 'createCategory']);
 Route::post("/save_category", [CategoryController::class, 'saveCategory']);
 Route::get("/edit_category/{id}", [CategoryController::class, 'editCategory']);
 Route::post("/update_category/{id}", [CategoryController::class, 'updateCategory']);
+
+Route::get("/tables", [TableController::class, 'index']);
+Route::get("/create_table", [TableController::class, 'createTable']);
+Route::post("/save_table", [TableController::class, 'saveTable']);
+
+Route::get("/pending_sell_list", [SaleController::class, 'pendingSellList']);
+Route::get("/add_new_item_row", [SaleController::class, 'addNewItemRow']);
+Route::get("/sale_product", [SaleController::class, 'saleProduct']);
 
 Route::get("/logout", [UserController::class, 'logout']);
