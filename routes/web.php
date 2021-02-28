@@ -83,7 +83,6 @@ Route::get("/create_table", [TableController::class, 'createTable']);
 Route::post("/save_table", [TableController::class, 'saveTable']);
 
 Route::get("/pending_sell_list", [SaleController::class, 'pendingSellList']);
-Route::get("/add_new_item_row", [SaleController::class, 'addNewItemRow']);
 Route::get("/sale_product", [SaleController::class, 'saleProduct']);
 
 Route::get("/logout", [UserController::class, 'logout']);

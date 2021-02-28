@@ -53,16 +53,7 @@
                     </div>
                     <div class="col-sm-3 mb-3 mb-sm-0">
                         <label>Customer Code </label>
-                        <input class="form-control form-control-user" 
-                            list="customers" name="customer_code" id="customer_code">
-
-                        <datalist id="customers">
-                            <option value="0">Edge</option>
-                            <option value="Firefox">Firefox</option>
-                            <option value="Chrome">Chrome</option>
-                            <option value="Opera">Opera</option>
-                            <option value="Safari">Safari</option>
-                        </datalist>
+                        <input class="form-control" name="customer_code" id="customer_code" />
                     </div>
                     <div class="col-sm-3 mb-3 mb-sm-0">
                         <label>Payment Type</label>
@@ -75,6 +66,22 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <div class="col-sm-5">
+                        <select class="form-control" name="item" id="item">
+                            <option value="">Select Product</option>
+                            @foreach($products as $p)
+                                <option value="{{ $p->id.'~'.$p->price }}">{{ $p->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                        <span class="btn btn-sm btn-success" title="Add Item" id="add_item">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="table-data" width="100%" cellspacing="0">
                             <thead>
@@ -83,42 +90,11 @@
                                     <th class="text-center">Price</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-center">Total</th>
-                                    <th class="text-center">
-                                        <span class="btn btn-sm btn-success" title="Add Item" id="tr_clone_add">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                    </th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">
-                                        <input class="form-control" 
-                                            list="customers" name="product_name" id="product_name">
-
-                                        <datalist id="customers">
-                                            <option value="0">Edge</option>
-                                            <option value="Firefox">Firefox</option>
-                                            <option value="Chrome">Chrome</option>
-                                            <option value="Opera">Opera</option>
-                                            <option value="Safari">Safari</option>
-                                        </datalist>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="text" class="form-control" name="price" id="price" readonly="readonly" />
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="number" class="form-control" name="quantity" id="quantity" />
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="text" class="form-control" name="total_price" id="total_price" readonly="readonly" />
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="btn btn-sm btn-danger delete" title="Remove Item">
-                                            <i class="fa fa-archive" aria-hidden="true"></i>
-                                        </span>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -130,49 +106,27 @@
 
 </div>
 
-    <script type="text/javascript">
-    
-    $('#customer').on('change', function() {
-        var value = $(this).val();
-        alert($('#customers [value="' + value + '"]').data('customvalue'));
+<script type="text/javascript">
+
+    $('select').select2();
+
+    $('#add_item').on('click', function() {
+        var item_value = $("#item").val();
+        var res = item_value.split('~');
+
+        var prod_id = res[0];
+        var prod_price = res[1];
+        var prod_name = $("#item option:selected").text();
+
+        $("#table-data tbody").append(
+            '<tr><td class="text-center"><input type="text" class="form-control" name="product_name[]" id="product_name" value="'+prod_name+'" /><input type="text" class="form-control" name="product_id[]" id="product_id" value="'+prod_id+'" /></td><td class="text-center"><input type="text" class="form-control" name="product_price[]" id="product_price" value="'+prod_price+'" /></td><td class="text-center"><input type="text" class="form-control" name="quantity[]" id="quantity" value="" /></td><td class="text-center"><input type="text" class="form-control" name="total_price[]" id="total_price" value="" /></td><td class="text-center"><span class="btn btn-sm btn-danger" id="DeleteButton" title="Remove Item"><i class="fa fa-archive" aria-hidden="true"></i></span></td></tr>'
+        );
     });
 
-    // function addNewItem(){
-    //     $.ajax({
-    //         type:'POST',
-    //         url:"/add_new_item_row",
-    //         data:{"_token": "{{ csrf_token() }}"},
-    //         success:function(data){
-    //             if(data.length > 0){
-    //                 $("#email_emessage").css('display', 'block');
-    //                 $("#email_address").val('');
-    //                 $("#submit_btn").attr('disabled', 'disabled');
-    //             }else{
-    //                 $("#email_emessage").css('display', 'none');
-    //                 $("#submit_btn").attr('disabled', false);
+    $("#table-data").on("click", "#DeleteButton", function() {
+        $(this).closest("tr").remove();
+    });
 
-    //                 $("#confirm_password").blur();
-    //             }
-    //         }
-    //     });
-    // }
-
-    $("#tr_clone_add").on("click",function(){
-       
-       var $tableBody = $('#table-data').find("tbody"),
-               $trLast = $tableBody.find("tr:last"),
-               $trNew = $trLast.clone();
-               $trNew.find('input').val('');
-           $trLast.after($trNew);
-       });
-
-       $(".delete").live('click', function(event) {
-            var rowCount = $('#table-data tbody tr').length;
-
-            console.log(rowCount);
-
-            $(this).parent().parent().remove();
-        });
-    </script>
+</script>
 
 @endsection

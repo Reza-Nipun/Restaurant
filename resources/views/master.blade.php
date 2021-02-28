@@ -22,6 +22,12 @@
 
     <script src="{{ asset('assets/js/jquery.min.js') }}" type="text/javascript"></script>
 
+  <!--Select2 Start-->
+  <script src="{{ asset('assets/select2/jquery.min.js') }}"></script>
+  <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
+  <link href="{{ asset('assets/select2/select2.min.css') }}" rel="stylesheet"/>
+  <!--Select2 End-->
+
     <style>
         .awesome {
       
