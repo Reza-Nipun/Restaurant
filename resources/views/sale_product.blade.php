@@ -79,6 +79,11 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </span>
                     </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="vat" id="vat" value="0" onkeyup="calculateGrandTotal()" />
+                        <span>VAT(%)</span>
+                    </div>
                     
                 </div>
                 <div class="form-group row">
@@ -96,6 +101,29 @@
                             <tbody>
                                 
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-right" colspan="3"><h5>Total</h5></th>
+                                    <th class="text-center">
+                                        <input type="text" class="form-control" readonly="readonly" name="total" id="total" />
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" colspan="3"><h5>Discount(%)</h5></th>
+                                    <th class="text-center">
+                                        <input type="text" class="form-control" name="discount" id="discount" value="0" onkeyup="calculateGrandTotal()" />
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" colspan="3"><h5>Grand Total</h5></th>
+                                    <th class="text-center">
+                                        <input type="text" class="form-control" readonly="readonly" name="grand_total" id="grand_total" />
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -110,22 +138,99 @@
 
     $('select').select2();
 
+    var prod_array = [];
+
     $('#add_item').on('click', function() {
+
         var item_value = $("#item").val();
-        var res = item_value.split('~');
 
-        var prod_id = res[0];
-        var prod_price = res[1];
-        var prod_name = $("#item option:selected").text();
+        if(item_value != ''){
 
-        $("#table-data tbody").append(
-            '<tr><td class="text-center"><input type="text" class="form-control" name="product_name[]" id="product_name" value="'+prod_name+'" /><input type="text" class="form-control" name="product_id[]" id="product_id" value="'+prod_id+'" /></td><td class="text-center"><input type="text" class="form-control" name="product_price[]" id="product_price" value="'+prod_price+'" /></td><td class="text-center"><input type="text" class="form-control" name="quantity[]" id="quantity" value="" /></td><td class="text-center"><input type="text" class="form-control" name="total_price[]" id="total_price" value="" /></td><td class="text-center"><span class="btn btn-sm btn-danger" id="DeleteButton" title="Remove Item"><i class="fa fa-archive" aria-hidden="true"></i></span></td></tr>'
-        );
+            var res = item_value.split('~');
+
+            var prod_id = parseInt(res[0]);
+            var prod_price = parseFloat(res[1]);
+            var prod_name = $("#item option:selected").text();
+            
+            if(prod_array.indexOf(prod_id) == -1){
+                
+                prod_array.push(prod_id);
+
+                $("#table-data tbody").append(
+                    '<tr id="tr'+prod_id+'"><td class="text-center"><input type="text" class="form-control" readonly="readonly" name="product_name[]" id="product_name" value="'+prod_name+'" /><input type="hidden" class="form-control" readonly="readonly" name="product_id[]" id="product_id'+prod_id+'" value="'+prod_id+'" /></td><td class="text-center"><input type="text" class="form-control" readonly="readonly" name="product_price[]" id="product_price'+prod_id+'" value="'+prod_price+'" /></td><td class="text-center"><input type="text" class="form-control" name="quantity[]" id="quantity'+prod_id+'" onkeyup="calculateTotalPrice('+prod_id+');" /></td><td class="text-center"><input type="text" class="form-control total_price" readonly="readonly" name="total_price[]" id="total_price'+prod_id+'" value="" /></td><td class="text-center"><span class="btn btn-sm btn-danger" id="DeleteButton" title="Remove Item" onclick="deleteItem('+prod_id+');"><i class="fa fa-archive" aria-hidden="true"></i></span></td></tr>'
+                );
+
+            }else{
+                alert("Item is Already Added!");
+            }
+        
+        }
+
     });
 
-    $("#table-data").on("click", "#DeleteButton", function() {
-        $(this).closest("tr").remove();
-    });
+    // $("#table-data").on("click", "#DeleteButton", function() {
+    //     $(this).closest("tr").remove();
+
+    //     calculateGrandTotal();
+    // });
+
+    function deleteItem(prod_id){
+        $("#tr"+prod_id).remove();
+
+        i = prod_array.indexOf(prod_id);
+        if(i >= 0) {
+            prod_array.splice(i,1);
+        }
+
+        calculateGrandTotal();
+    }
+
+    function calculateTotalPrice(prod_id){
+        var product_price = $("#product_price"+prod_id).val();
+        product_price = (product_price != '' ? product_price : 0);
+
+        var qty = $("#quantity"+prod_id).val();
+        qty = ((qty != '' && qty > -1) ? qty : 0);
+        $("#quantity"+prod_id).val(qty);
+        
+        var total_price = product_price * qty;
+        $("#total_price"+prod_id).val(total_price);
+        
+        calculateGrandTotal();
+    }
+
+    function calculateGrandTotal(){
+        var sum = 0;
+        $("input[class *= 'total_price']").each(function(){
+            sum += +$(this).val();
+        });
+        $("#total").val(sum);
+
+        var discount = $("#discount").val();
+        discount = (discount != '' ? discount : 0);
+
+        var vat = $("#vat").val();
+        vat = (vat != '' ? vat : 0);
+
+        var net_price = sum - parseFloat((((discount/sum) * 100).toFixed(2)));
+        net_price = (net_price != '' && !isNaN(net_price) && isFinite(net_price) ? net_price : 0);
+
+        var vat_price = parseFloat(((vat/net_price) * 100).toFixed(2));
+        vat_price = (vat_price != '' && !isNaN(vat_price) && isFinite(vat_price) ? vat_price : 0);
+
+        var grand_total = net_price+vat_price;
+        grand_total = (grand_total != '' && !isNaN(grand_total) && isFinite(grand_total) ? grand_total : 0);
+
+        console.log('SUM: '+sum);
+        console.log('VAT: '+vat);
+        console.log('DIS: '+discount);
+        console.log('NET: '+net_price);
+        console.log('VAT AMOUNT: '+vat_price);
+        console.log('G. TOTAL: '+grand_total);
+
+        $("#grand_total").val(grand_total);
+
+    }
 
 </script>
 
