@@ -83,6 +83,9 @@ Route::get("/create_table", [TableController::class, 'createTable']);
 Route::post("/save_table", [TableController::class, 'saveTable']);
 
 Route::get("/pending_sell_list", [SaleController::class, 'pendingSellList']);
+Route::get("/print/{invoice_id}", [SaleController::class, 'printOrder']);
+Route::get("/print_invoice/{invoice_id}", [SaleController::class, 'printInvoice']);
 Route::get("/sale_product", [SaleController::class, 'saleProduct']);
+Route::post("/save_sale_product", [SaleController::class, 'saveSaleProduct']);
 
 Route::get("/logout", [UserController::class, 'logout']);

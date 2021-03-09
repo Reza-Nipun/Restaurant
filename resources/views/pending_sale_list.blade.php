@@ -44,7 +44,7 @@
                             <th class="text-center">Table</th>
                             <th class="text-center">Customer ID</th>
                             <th class="text-center">Sale Type</th>
-                            <th class="text-center">G. Total</th>
+                            <th class="text-center">Amount</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -57,7 +57,11 @@
                             <td class="text-center">{{ $pl->customer_code }}</td>
                             <td class="text-center">{{ $pl->sell_type == 0 ? 'Restaurant' : 'Online' }}</td>
                             <td class="text-center">{{ $pl->grand_total }}</td>
-                            <td class="text-center"></td>
+                            <td class="text-center">
+                                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="/print/{{ $pl->id }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</a>
+                                <a href="/print_invoice/{{ $pl->id }}" class="btn btn-sm btn-warning" onclick="return confirm('Are you sure to print invoice?')"><i class="fa fa-receipt"></i> Invoice</a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
