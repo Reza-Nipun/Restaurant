@@ -8,12 +8,13 @@
     <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Sale Product</h1>
+    <h1 class="h3 mb-2 text-gray-800">Edit Sale Product</h1>
     
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+            INVOICE NO: <b>{{ $sales_summary->invoice_no }}</b>
             <h6 class="m-0 font-weight-bold text-primary">
                 @if(Session::has('flash_message'))
                     <p class="alert alert-danger">
@@ -36,30 +37,31 @@
                         <label>Sale Type <span style="color: red;">*</span></label>
                         <select class="form-control" id="sale_type" name="sale_type" required="required">
                             <option value="">Sale Type</option>
-                            <option value="0">Restaurant</option>
-                            <option value="1">Online</option>
+                            <option value="0" @if($sales_summary->sell_type == 0) selected="selected" @endif>Restaurant</option>
+                            <option value="1" @if($sales_summary->sell_type == 1) selected="selected" @endif>Online</option>
                         </select>
+                        <input type="hidden" name="invoice_id" id="invoice_id" value="{{ $sales_summary->id }}">
                     </div>
                     <div class="col-sm-3 mb-3 mb-sm-0">
                         <label>Table </label>
                         <select class="form-control" id="table_no" name= table_no>
                             <option value="">Select Table</option>
                             @foreach($tables as $t)
-                                <option value="{{ $t->id }}">{{ $t->table }}</option>
+                                <option value="{{ $t->id }}" @if($sales_summary->table_id == $t->id) selected="selected" @endif>{{ $t->table }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-sm-3 mb-3 mb-sm-0">
                         <label>Customer Code <span class="btn btn-sm btn-warning" style="font-size: 0.6em;" title="Check"><i class="fa fa-check" aria-hidden="true"></i></span></label>
-                        <input class="form-control" name="customer_code" id="customer_code" />
+                        <input class="form-control" name="customer_code" id="customer_code" @if($sales_summary->customer_id <> 0) value="{{ $customer_info->customer_code }}" @endif />
                     </div>
                     <div class="col-sm-3 mb-3 mb-sm-0">
                         <label>Payment Type</label>
                         <select class="form-control" id="payment_type" name="payment_type">
                             <option value="">Payment Type</option>
-                            <option value="0">Cash</option>
-                            <option value="1">Mobile Banking</option>
-                            <option value="2">Card</option>
+                            <option value="0" @if($sales_summary->payment_type == 0) selected="selected" @endif>Cash</option>
+                            <option value="1" @if($sales_summary->payment_type == 1) selected="selected" @endif>Mobile Banking</option>
+                            <option value="2" @if($sales_summary->payment_type == 2) selected="selected" @endif>Card</option>
                         </select>
                     </div>
                 </div>
@@ -79,7 +81,7 @@
                     </div>
                     <div class="col-sm-2"></div>
                     <div class="col-sm-1">
-                        <span type="submit" class="btn btn-success" onclick="saveSaleProduct()">SAVE</button>
+                        <span type="submit" class="btn btn-success" onclick="udpateSaleProduct()">UPDATE</button>
                     </div>
                     
                 </div>
@@ -96,7 +98,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                             @foreach($sales_detail as $k => $s)   
+                                <tr id="tr{{ $s->product_id }}">
+                                    <td class="text-center">
+                                        <input type="text" class="form-control" readonly="readonly" name="product_name[]" id="product_name" value="{{ $s->product_name }}" />
+                                        <input type="hidden" class="form-control" readonly="readonly" name="product_id[]" id="product_id{{ $s->product_id }}" value="{{ $s->product_id }}" />
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control" readonly="readonly" name="product_price[]" id="product_price{{ $s->product_id }}" value="{{ $s->price }}" />
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control prod_qty" autocomplete="off" name="quantity[]" id="quantity{{ $s->product_id }}" value="{{ $s->quantity }}" onkeyup="calculateTotalPrice('{{ $s->product_id }}');" />
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control total_price" readonly="readonly" name="total_price[]" id="total_price{{ $s->product_id }}" value="" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="btn btn-sm btn-danger" id="DeleteButton" title="Remove Item" onclick="deleteItem('{{ $s->product_id }}');">
+                                            <i class="fa fa-archive" aria-hidden="true"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -109,14 +132,14 @@
                                 <tr>
                                     <th class="text-right" colspan="3"><h5>Discount(%)</h5></th>
                                     <th class="text-center">
-                                        <input type="text" class="form-control" autocomplete="off" name="discount" id="discount" value="0" onkeyup="calculateGrandTotal()" />
+                                        <input type="text" class="form-control" autocomplete="off" name="discount" id="discount" value="{{ $sales_summary->discount_percentage }}" onkeyup="calculateGrandTotal()" />
                                     </th>
                                     <th></th>
                                 </tr>
                                 <tr>
                                     <th class="text-right" colspan="3"><h5>VAT(%)</h5></th>
                                     <th class="text-center">
-                                    <input type="text" class="form-control" autocomplete="off" name="vat" id="vat" value="0" onkeyup="calculateGrandTotal()" />
+                                    <input type="text" class="form-control" autocomplete="off" name="vat" id="vat" value="{{ $sales_summary->vat_percentage }}" onkeyup="calculateGrandTotal()" />
                                     </th>
                                     <th></th>
                                 </tr>
@@ -137,6 +160,14 @@
 </div>
 
 <script type="text/javascript">
+
+    $(document).ready(function(){
+
+    $( ".prod_qty" ).keyup();
+    $( "#discount" ).keyup();
+    $( "#vat" ).keyup();
+
+    });
 
     $('select').select2();
 

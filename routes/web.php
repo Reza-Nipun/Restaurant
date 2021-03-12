@@ -87,5 +87,6 @@ Route::get("/print/{invoice_id}", [SaleController::class, 'printOrder']);
 Route::get("/print_invoice/{invoice_id}", [SaleController::class, 'printInvoice']);
 Route::get("/sale_product", [SaleController::class, 'saleProduct']);
 Route::post("/save_sale_product", [SaleController::class, 'saveSaleProduct']);
+Route::get("/edit_order/{invoice_id}", [SaleController::class, 'editOrder']);
 
 Route::get("/logout", [UserController::class, 'logout']);
