@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -343,6 +344,44 @@ class UserController extends Controller
         }else{
             return redirect('/');
         }
+    }
+
+    public function getProfileInfo(){
+        if(Session::has('user')){
+            $title = 'Profile';
+
+            $user_id = Session::get('user')->id;
+
+            $user_info = User::find($user_id);
+
+            return view('user_profile', compact('user_info', 'title'));
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function updateUserProfile(Request $request, $id){
+
+        $name = $request->name;
+        $shop_name = $request->shop_name;
+        $address = $request->address;
+        $phone = $request->phone;
+        $mobile = $request->mobile;
+        $receipt_note = $request->receipt_note;
+
+        $user = User::find($id);
+        $user->name = $name;
+        $user->shop_name = $shop_name;
+        $user->address = $address;
+        $user->phone = $phone;
+        $user->mobile = $mobile;
+        $user->receipt_note = $receipt_note;
+        $user->save();
+
+        Session::put('success_message', 'User Profile Successfully Updated.');
+
+        return redirect()->back();
+
     }
 
     function resetPassword($id){

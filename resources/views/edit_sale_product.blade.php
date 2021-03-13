@@ -28,7 +28,6 @@
                     </p>
                     {{ Session::forget('success_message') }}
                 @endif
-
             </h6>
         </div>
         <div class="card-body">
@@ -263,7 +262,8 @@
 
     }
 
-    function saveSaleProduct(){
+    function udpateSaleProduct(){
+        var invoice_id = $("#invoice_id").val();
         var sale_type = $("#sale_type").val();
         var table_no = $("#table_no").val();
         var customer_code = $("#customer_code").val();
@@ -299,9 +299,9 @@
         
         if(sale_type != "" && product_id_array.length > 0){
             $.ajax({
-                url: "{{ url('/save_sale_product') }}",
+                url: "{{ url('/update_sale_product') }}",
                 type:'POST',
-                data: {_token:"{{csrf_token()}}", total: total, discount: discount, vat: vat, grand_total: grand_total, sale_type: sale_type, table_no: table_no, customer_code: customer_code, payment_type: payment_type, product_id_array: product_id_array, product_qty_array: product_qty_array, product_price_array: product_price_array},
+                data: {_token:"{{csrf_token()}}", invoice_id: invoice_id, total: total, discount: discount, vat: vat, grand_total: grand_total, sale_type: sale_type, table_no: table_no, customer_code: customer_code, payment_type: payment_type, product_id_array: product_id_array, product_qty_array: product_qty_array, product_price_array: product_price_array},
                 dataType: "json",
                 success: function (data) {
                     window.location.href = "{{URL::to('pending_sell_list')}}"

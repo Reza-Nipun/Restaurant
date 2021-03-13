@@ -93,6 +93,7 @@ $days = (int)(($datetime2 - $datetime1)/86400);
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sale:</h6>
                 <a class="collapse-item" href="/pending_sell_list">Pending Sales</a>
+                <a class="collapse-item" href="/reconcile_order">Reconcile Order</a>
             </div>
         </div>
     </li>

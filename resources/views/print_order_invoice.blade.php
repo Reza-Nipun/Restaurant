@@ -85,7 +85,7 @@
                 </tfoot>
             </table>
             <hr>
-            <p>*** Thank you for visiting us! ***</p>
+            <p>*** {{ ($user_info->receipt_note <> '' ? $user_info->receipt_note : 'Thank you for visiting us!') }} ***</p>
         </div>
     </body>
 </html>

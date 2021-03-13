@@ -58,6 +58,8 @@ Route::get("/edit_registration_request/{id}", [UserController::class, 'editRegis
 Route::get("/edit_user/{id}", [UserController::class, 'editUser']);
 Route::post("/update_user/{id}", [UserController::class, 'updateUser']);
 Route::post("/update_registration_info/{id}", [UserController::class, 'updateRegistrationInfo']);
+Route::get("/profile", [UserController::class, 'getProfileInfo']);
+Route::post("/update_user_profile/{id}", [UserController::class, 'updateUserProfile']);
 
 Route::get("/expenses", [ExpenseController::class, 'expenses']);
 Route::get("/create_expense", [ExpenseController::class, 'createExpense']);
@@ -88,5 +90,8 @@ Route::get("/print_invoice/{invoice_id}", [SaleController::class, 'printInvoice'
 Route::get("/sale_product", [SaleController::class, 'saleProduct']);
 Route::post("/save_sale_product", [SaleController::class, 'saveSaleProduct']);
 Route::get("/edit_order/{invoice_id}", [SaleController::class, 'editOrder']);
+Route::post("/update_sale_product", [SaleController::class, 'udpateSaleProduct']);
+Route::get("/reconcile_order", [SaleController::class, 'reconcileOrder']);
+Route::post("/allow_reconciliation", [SaleController::class, 'allowReconciliation']);
 
 Route::get("/logout", [UserController::class, 'logout']);
