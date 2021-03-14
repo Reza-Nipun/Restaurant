@@ -17,7 +17,7 @@
             <h6 class="m-0 font-weight-bold text-primary"></h6>
         </div>
         <div class="card-body">
-            <form action="/save_sales_account" method="POST">
+            <form action="{{ url('/save_sales_account') }}" method="POST">
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -89,7 +89,7 @@
             if(email_address != ''){
                 $.ajax({
                     type:'POST',
-                    url:"/user_availability",
+                    url:"{{ url('/user_availability') }}",
                     data:{"_token": "{{ csrf_token() }}", email: email},
                     success:function(data){
                         if(data.length > 0){

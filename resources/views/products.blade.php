@@ -11,7 +11,7 @@
             <h1 class="h3 mb-2 text-gray-800">Product List</h1>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-success" href="/create_product">
+            <a class="btn btn-success" href="{{ url('/create_product') }}">
                 <i class="fa fa-plus" aria-hidden="true"></i> Product
             </a>    
         </div>
@@ -58,7 +58,7 @@
                                 <td class="text-center">{{ $p->price }}</td>
                                 <td class="text-center">{{ ($p->status == 1 ? 'Active' : 'Inactive') }}</td>
                                 <td class="text-center">
-                                    <a href="edit_product/{{ $p->id }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ url('/edit_product/'.$p->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -11,7 +11,7 @@
         <h1 class="h3 mb-2 text-gray-800">Users</h1>
         </div>
         <div class="col-sm-2">
-        <a class="btn btn-success" href="/new_user"><i class="fa fa-plus" aria-hidden="true"></i> User</a>
+        <a class="btn btn-success" href="{{ url('/new_user') }}"><i class="fa fa-plus" aria-hidden="true"></i> User</a>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
                                 <td class="text-center">{{ $u->account_valid_till }}</td>
                                 <td class="text-center">{{ $u->status == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-                                    <a href="/edit_user/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ url('/edit_user/'.$u->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -31,7 +31,7 @@
             </h6>
         </div>
         <div class="card-body">
-            <form action="/save_category" method="POST">
+            <form action="{{ url('/save_category') }}" method="POST">
                 {{ csrf_field() }} 
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -73,7 +73,7 @@
             if(email_address != ''){
                 $.ajax({
                     type:'POST',
-                    url:"/user_availability",
+                    url:"{{ url('/user_availability') }}",
                     data:{"_token": "{{ csrf_token() }}", email: email},
                     success:function(data){
                         if(data.length > 0){

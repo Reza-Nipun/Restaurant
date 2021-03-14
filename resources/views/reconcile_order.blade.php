@@ -32,7 +32,7 @@
         </div>
         
         <div class="card-body">
-            <form action="/allow_reconciliation" method="POST">
+            <form action="{{ url('/allow_reconciliation') }}" method="POST">
                 {{ csrf_field() }} 
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -56,31 +56,6 @@
 
     <script type="text/javascript">
         $('select').select2();
-
-        function checkEmailAddressAvailability(){
-            var email = $("#email_address").val();
-
-            if(email_address != ''){
-                $.ajax({
-                    type:'POST',
-                    url:"/user_availability",
-                    data:{"_token": "{{ csrf_token() }}", email: email},
-                    success:function(data){
-                        if(data.length > 0){
-                            $("#email_emessage").css('display', 'block');
-                            $("#email_address").val('');
-                            $("#submit_btn").attr('disabled', 'disabled');
-                        }else{
-                            $("#email_emessage").css('display', 'none');
-                            $("#submit_btn").attr('disabled', false);
-
-                            $("#confirm_password").blur();
-                        }
-                    }
-                });
-            }
-        }
-
     </script>
 
 @endsection

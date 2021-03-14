@@ -33,7 +33,7 @@
                                             @endif
                                         
                                     </div>
-                                    <form class="user" action="/login" method="POST">
+                                    <form class="user" action="{{ url('/login') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
@@ -48,12 +48,12 @@
                                             Login
                                         </button>
                                         <div class="text-right mt-2">
-                                            <a class="small" href="/forgot_password">Forgot Password?</a>
+                                            <a class="small" href="{{ url('/forgot_password') }}">Forgot Password?</a>
                                         </div>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="btn btn-success" href="/register">Create New Account</a>
+                                        <a class="btn btn-success" href="{{ url('/register') }}">Create New Account</a>
                                     </div>
                                     
                                 </div>

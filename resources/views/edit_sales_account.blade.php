@@ -17,7 +17,7 @@
             <h6 class="m-0 font-weight-bold text-primary"></h6>
         </div>
         <div class="card-body">
-            <form action="/update_sales_account/{{ $sales_account_info->id }}" method="POST">
+            <form action="{{ url('/update_sales_account/'.$sales_account_info->id) }}" method="POST">
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -69,7 +69,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <button class="btn btn-success">UPDATE</button>
-                        <a class="btn btn-primary" href="/reset_password/{{ $sales_account_info->id }}" onclick="return confirm('Are you sure to reset password?');">Reset Password</a>
+                        <a class="btn btn-primary" href="{{ url('/reset_password/'.$sales_account_info->id) }}" onclick="return confirm('Are you sure to reset password?');">Reset Password</a>
                     </div>
                     <div class="col-sm-6">
                         
@@ -89,7 +89,7 @@
             if(email_address != ''){
                 $.ajax({
                     type:'POST',
-                    url:"/user_availability",
+                    url:"{{ url('/user_availability') }}",
                     data:{"_token": "{{ csrf_token() }}", email: email},
                     success:function(data){
                         if(data.length > 0){

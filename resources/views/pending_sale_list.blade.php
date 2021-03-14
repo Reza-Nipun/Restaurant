@@ -11,7 +11,7 @@
             <h1 class="h3 mb-2 text-gray-800">Pending List</h1>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-success" href="/sale_product">
+            <a class="btn btn-success" href="{{ url('/sale_product') }}">
                 <i class="fa fa-money-check-alt" aria-hidden="true"></i> Sale Product
             </a>    
         </div>
@@ -58,9 +58,9 @@
                             <td class="text-center">{{ $pl->sell_type == 0 ? 'Restaurant' : 'Online' }}</td>
                             <td class="text-center">{{ $pl->grand_total }}</td>
                             <td class="text-center">
-                                <a href="/edit_order/{{ $pl->id }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="/print/{{ $pl->id }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</a>
-                                <span class="btn btn-sm btn-warning" onclick="invoiceConfirmation('{{ $pl->id }}')"><i class="fa fa-receipt"></i> Invoice</span>
+                                <a href="{{ url('/edit_order/'.$pl->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="{{ url('/print/'.$pl->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</a>
+                                <a href="{{ url('/print_invoice/'.$pl->id) }}" target="_blank" class="btn btn-sm btn-warning" onclick="return confirm('Are you sure to print invoice?');"><i class="fa fa-receipt"></i> Invoice</span>
                             </td>
                         </tr>
                     @endforeach
@@ -78,7 +78,7 @@
         var c = confirm('Are you sure to print invoice?');
 
         if(c == true){
-            window.open("/print_invoice/"+id, '_blank');
+            window.open("{{ url('/print_invoice/"+id+"') }}", '_blank');
             location.reload();
         }
     }

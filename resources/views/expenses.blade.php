@@ -11,7 +11,7 @@
             <h1 class="h3 mb-2 text-gray-800">Expenditures</h1>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-success" href="/create_expense">
+            <a class="btn btn-success" href="{{ url('/create_expense') }}">
                 <i class="fa fa-plus" aria-hidden="true"></i> Expense
             </a>    
         </div>
@@ -58,8 +58,8 @@
                                 <td class="text-center">{{ $e->expense }}</td>
                                 <td class="text-center">{{ $e->name }}</td>
                                 <td class="text-center">
-                                    <a href="edit_expense/{{ $e->id }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                    <a href="delete_expense/{{ $e->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ url('/edit_expense/'.$e->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ url('/delete_expense/'.$e->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach

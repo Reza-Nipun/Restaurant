@@ -35,8 +35,8 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">User List:</h6>
-            <a class="collapse-item" href="/registration_requests">Registration Requests</a>
-            <a class="collapse-item" href="/users">Users</a>
+            <a class="collapse-item" href="{{ url('/registration_requests') }}">Registration Requests</a>
+            <a class="collapse-item" href="{{ url('/users') }}">Users</a>
         </div>
     </div>
 </li>
@@ -65,7 +65,7 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sales Account List:</h6>
-                <a class="collapse-item" href="/sales_accounts">Sales Accounts</a>
+                <a class="collapse-item" href="{{ url('/sales_accounts') }}">Sales Accounts</a>
             </div>
         </div>
     </li>
@@ -78,8 +78,8 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Products:</h6>
-                <a class="collapse-item" href="/products">Product List</a>
-                <a class="collapse-item" href="/categories">Category List</a>
+                <a class="collapse-item" href="{{ url('/products') }}">Product List</a>
+                <a class="collapse-item" href="{{ url('/categories') }}">Category List</a>
             </div>
         </div>
     </li>
@@ -92,8 +92,8 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         <div id="collapseSale" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sale:</h6>
-                <a class="collapse-item" href="/pending_sell_list">Pending Sales</a>
-                <a class="collapse-item" href="/reconcile_order">Reconcile Order</a>
+                <a class="collapse-item" href="{{ url('/pending_sell_list') }}">Pending Sales</a>
+                <a class="collapse-item" href="{{ url('/reconcile_order') }}">Reconcile Order</a>
             </div>
         </div>
     </li>
@@ -106,12 +106,12 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         <div id="collapseOtherExpense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Expenses:</h6>
-                <a class="collapse-item" href="/expenses">Expenses</a>
+                <a class="collapse-item" href="{{ url('/expenses') }}">Expenses</a>
             </div>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/tables">
+        <a class="nav-link" href="{{ url('/tables') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
     </li>
@@ -141,7 +141,7 @@ $days = (int)(($datetime2 - $datetime1)/86400);
         <div id="collapseSale" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sale:</h6>
-                <a class="collapse-item" href="/pending_sell_list">Pending Sales</a>
+                <a class="collapse-item" href="{{ url('/pending_sell_list') }}">Pending Sales</a>
             </div>
         </div>
     </li>

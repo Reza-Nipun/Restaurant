@@ -36,7 +36,7 @@
                                 <td class="text-center">{{ $u->access_level == 1 ? 'Admin' : ($u->access_level == 2 ? 'Sales Account' : 'Super Admin') }}</td>
                                 <td class="text-center">{{ $u->status == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-                                    <a href="/edit_registration_request/{{ $u->id }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ url('/edit_registration_request/'.$u->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach

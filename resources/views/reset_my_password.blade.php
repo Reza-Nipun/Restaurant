@@ -26,7 +26,7 @@
                                         {{ Session::forget('success_message') }}
                                     @endif
                             </div>
-                            <form class="user" action="/resetting_password/{{ $email }}/{{ $code }}" method="POST">
+                            <form class="user" action="{{ url('/resetting_password/'.$email.'/'.$code) }}" method="POST">
                                 @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -45,7 +45,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/"> << Back to Login</a>
+                                <a class="small" href="{{ url('/') }}"> << Back to Login</a>
                             </div>
                         </div>
                     </div>
@@ -75,26 +75,6 @@
                 }
             }
 
-        }
-
-        function checkEmailAddressAvailability(){
-            var email = $("#email_address").val();
-
-            if(email_address != ''){
-                $.ajax({
-                    type:'POST',
-                    url:"/forgot_password_accessability",
-                    data:{"_token": "{{ csrf_token() }}", email: email},
-                    success:function(data){
-
-                        if(data.length == 0){
-                            $("#email_emessage").css('display', 'block');
-                            $("#email_address").val('');
-                        }
-
-                    }
-                });
-            }
         }
     
     </script>

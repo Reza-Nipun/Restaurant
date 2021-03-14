@@ -26,7 +26,7 @@
                                         {{ Session::forget('success_message') }}
                                     @endif
                             </div>
-                            <form class="user" action="/send_reset_password_link" method="POST">
+                            <form class="user" action="{{ url('/send_reset_password_link') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="email_address"
@@ -40,7 +40,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/"> << Back to Login</a>
+                                <a class="small" href="{{ url('/') }}"> << Back to Login</a>
                             </div>
                         </div>
                     </div>

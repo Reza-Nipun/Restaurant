@@ -26,7 +26,7 @@
                                         {{ Session::forget('success_message') }}
                                     @endif
                             </div>
-                            <form class="user" action="/registration" method="POST">
+                            <form class="user" action="{{ url('/registration') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="exampleFirstName"
@@ -58,7 +58,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/">Already have an account? Login!</a>
+                                <a class="small" href="{{ url('/') }}">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
             if(email_address != ''){
                 $.ajax({
                     type:'POST',
-                    url:"/user_availability",
+                    url:"{{ url('/user_availability') }}",
                     data:{"_token": "{{ csrf_token() }}", email: email},
                     success:function(data){
                         if(data.length > 0){
