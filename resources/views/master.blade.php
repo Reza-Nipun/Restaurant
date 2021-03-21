@@ -132,11 +132,10 @@
             </div>
             <!-- End of Main Content -->
 
-            @if(Session::has('user'))
             <!-- Footer -->
             {{ View::make('footer') }}
             <!-- End of Footer -->
-            @endif
+          
 
         @if(Session::has('user'))
         </div>

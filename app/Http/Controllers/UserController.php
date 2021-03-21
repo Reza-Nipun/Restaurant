@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Sale;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -52,15 +53,27 @@ class UserController extends Controller
         if(Session::has('user')){
             $title = 'Dashboard';
             
-            $parent_id = Session::get('user')->id;
+            $u_id = 0;
+            $user_id = Session::get('user')->id;
+            $parent_id = Session::get('user')->parent_id;
+
+            if($parent_id == 0){
+                $u_id = $user_id;
+            }else{
+                $u_id = $parent_id;
+            }
 
             $expenses = Expense::where('parent_id', $parent_id)
                         ->where("date",">", (new \Carbon\Carbon)->submonths(6))
                         ->select(DB::raw("DATE_FORMAT(date, '%Y-%m') as year_mon"), DB::raw("SUM(expense) as total_month_expense"))
                         ->groupBy(DB::raw("DATE_FORMAT(date, '%Y-%m')"))
                         ->get();
+
+            $pending = Sale::where('user_id', '=', $u_id)->where('status', '=', 0)->get();
+            $pending_sales = $pending->count();
+            
                         
-            return view('dashboard', ['title'=>$title, 'expenses' => $expenses]);
+            return view('dashboard', ['title'=>$title, 'expenses' => $expenses, 'pending_sales' => $pending_sales]);
         }else{
             return redirect('/');
         }
