@@ -40,7 +40,7 @@
                                     <span style="color: red; display: none;" id="password_emessage">Password Mismatch!</span>
                                 </div>
                                 <button class="btn btn-primary btn-user btn-block" id="submit_btn">
-                                    Send Reset Link
+                                    Update
                                 </button>
                             </form>
                             <hr>

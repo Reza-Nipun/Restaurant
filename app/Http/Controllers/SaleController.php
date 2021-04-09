@@ -22,11 +22,22 @@ class SaleController extends Controller
             $user_id = Session::get('user')->id;
             $parent_id = Session::get('user')->parent_id;
 
+            $u_id = 0;
+            $user_id = Session::get('user')->id;
+            $parent_id = Session::get('user')->parent_id;
+
+            if($parent_id == 0){
+                $u_id = $user_id;
+            }else{
+                $u_id = $parent_id;
+            }
+
             $pending_list = DB::table('sales_summary')
                             ->leftJoin('customers', 'sales_summary.customer_id', '=', 'customers.id')
                             ->leftJoin('tables', 'sales_summary.table_id', '=', 'tables.id')
                             ->select('sales_summary.*', 'customers.customer_code', 'tables.table')
                             ->where('sales_summary.status', '=', 0)
+                            ->where('sales_summary.user_id', '=', $u_id)
                             ->get();
 
             return view('pending_sale_list', ['title'=>$title, 'pending_list'=>$pending_list]);

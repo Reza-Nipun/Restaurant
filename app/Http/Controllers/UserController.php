@@ -219,7 +219,9 @@ class UserController extends Controller
         if(Session::has('user')){
             $title = 'Sales Accounts';
 
-            $sales_accounts = User::where('access_level', 2)->get();
+            $user_id = Session::get('user')->id;
+
+            $sales_accounts = User::where('access_level', 2)->where('parent_id', $user_id)->get();
 
             return view('sales_accounts', ['sales_accounts'=>$sales_accounts, 'title'=>$title]);
         }else{
